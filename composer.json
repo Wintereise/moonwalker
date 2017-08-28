@@ -39,7 +39,8 @@
     "bin": ["bin/phprest"],
     "autoload": {
         "psr-4": {
-            "Phprest\\": "src"
+            "Phprest\\": "core",
+            "Moonwalker\\": "app"
         }
     },
     "autoload-dev": {
