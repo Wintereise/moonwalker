@@ -2,6 +2,7 @@
 
 namespace Moonwalker\Middlewares;
 
+use Moonwalker\Core\Errors\UserFriendlyException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -18,7 +19,7 @@ class JSONParseBody
             if (json_last_error() == JSON_ERROR_NONE)
                 return $next($request->withParsedBody($parsedBody), $response);
             else
-                throw new \Exception("Unable to deserialize JSON, please check your request body.");
+                throw new UserFriendlyException("Unable to deserialize JSON, please check your request body.", 400);
         }
 
         return $next($request, $response);

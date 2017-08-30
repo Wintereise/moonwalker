@@ -2,6 +2,7 @@
 namespace Moonwalker\Controllers;
 
 use Moonwalker\Core\Controller;
+use Moonwalker\Core\Errors\ValidationFailedException;
 use Moonwalker\Core\Response;
 
 use Psr\Http\Message\ResponseInterface;
@@ -11,7 +12,6 @@ class HelloWorldController extends Controller
 {
     public function sayHello (ServerRequestInterface $request, ResponseInterface $response)
     {
-        var_dump($this->container->get('validator'));
         $t = new Response($response);
         return $t->ok([ "Hello world!" ]);
     }
@@ -26,14 +26,7 @@ class HelloWorldController extends Controller
             $msg = 'All good!';
         }
         else
-        {
-            $msg = 'Malformed input: ';
-            foreach ($this->validator->errors() as $field => $error)
-            {
-                $msg .= "$error[0]. ";
-            }
-        }
-
+            throw new ValidationFailedException($this->validator->errors());
 
         $t = new Response($response);
         return $t->ok([ $msg ]);

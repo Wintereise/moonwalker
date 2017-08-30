@@ -14,9 +14,12 @@ class Response
 
     public function ok (Array $data)
     {
-        $this->response->getBody()->write(json_encode($data));
-        $this->response->withStatus(200);
+        return $this->__generate($data, 200);
+    }
 
-        return $this->response;
+    private function __generate ($data, $status)
+    {
+        $this->response->getBody()->write(json_encode($data));
+        return $this->response->withStatus($status);
     }
 }

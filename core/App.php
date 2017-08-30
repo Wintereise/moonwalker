@@ -4,10 +4,17 @@ namespace Moonwalker\Core;
 
 use \League\Container\Container as Container;
 use \League\Route\RouteCollection as RouteCollection;
+use League\BooBoo as ErrorHandler;
 
+use Moonwalker\Core\Errors\Formatters\SelectiveErrorFormatter;
+
+use Moonwalker\Core\Errors\Handlers\SelectiveErrorHandler;
 use \Zend\Diactoros\Response\SapiEmitter as SapiEmitter;
 use \Zend\Diactoros\Response as Response;
 use \Zend\Diactoros\ServerRequestFactory as ServerRequestFactory;
+
+use Monolog\Logger as Logger;
+use Monolog\Handler\StreamHandler as StreamHandler;
 
 class App extends Container
 {
@@ -43,10 +50,24 @@ class App extends Container
         });
         $this->share('emitter', SapiEmitter::class);
 
+        $this->share('logger', function ()
+        {
+            return new Logger('logs');
+        });
+
+
+
         $router = new RouteCollection($this);
         $this->share('router', $router);
-
         require_once $this->paths['routes'];
+
+        $errorHandler = new ErrorHandler\Runner();
+        $selectiveFormatter = new SelectiveErrorFormatter();
+        $logger = $this->get('logger')->pushHandler(new StreamHandler($paths['log']));
+        $logHandler = new SelectiveErrorHandler($logger);
+        $errorHandler->pushFormatter($selectiveFormatter);
+        $errorHandler->pushHandler($logHandler);
+        $errorHandler->register();
     }
 
     public function run ()
