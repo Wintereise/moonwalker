@@ -16,6 +16,7 @@
         "league/route": "@stable",
         "league/booboo": "@stable",
         "monolog/monolog": "@stable",
+        "vlucas/valitron": "@stable",
         "swiftmailer/swiftmailer": "@stable",
         "jmhobbs/swiftmailer-transport-aws-ses": "^0.9.2",
         "google/recaptcha": "~1.1",
