@@ -2,3 +2,5 @@
 vendor
 composer.lock
 app/Storage/app.log
+db
+.maghead-cli.*

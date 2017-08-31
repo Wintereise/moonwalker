@@ -14,7 +14,10 @@ use \Zend\Diactoros\Response as Response;
 use \Zend\Diactoros\ServerRequestFactory as ServerRequestFactory;
 
 use Monolog\Logger as Logger;
-use Monolog\Handler\StreamHandler as StreamHandler;
+use Monolog\Handler\RotatingFileHandler as FileHandler;
+
+use Maghead\Runtime\Config\FileConfigLoader;
+use Maghead\Runtime\Bootstrap;
 
 class App extends Container
 {
@@ -27,6 +30,19 @@ class App extends Container
 
         $this->paths = $paths;
         $this->config = $config;
+
+        $this->share('logger', function ()
+        {
+            return new Logger('app');
+        });
+
+        $errorHandler = new ErrorHandler\Runner();
+        $selectiveFormatter = new SelectiveErrorFormatter();
+        $logger = $this->get('logger')->pushHandler(new FileHandler($paths['log'], $config['log.retention']));
+        $logHandler = new SelectiveErrorHandler($logger);
+        $errorHandler->pushFormatter($selectiveFormatter);
+        $errorHandler->pushHandler($logHandler);
+        $errorHandler->register();
 
         $this->add('Moonwalker\Core\App', function ()
         {
@@ -50,24 +66,12 @@ class App extends Container
         });
         $this->share('emitter', SapiEmitter::class);
 
-        $this->share('logger', function ()
-        {
-            return new Logger('logs');
-        });
-
-
-
         $router = new RouteCollection($this);
         $this->share('router', $router);
         require_once $this->paths['routes'];
 
-        $errorHandler = new ErrorHandler\Runner();
-        $selectiveFormatter = new SelectiveErrorFormatter();
-        $logger = $this->get('logger')->pushHandler(new StreamHandler($paths['log']));
-        $logHandler = new SelectiveErrorHandler($logger);
-        $errorHandler->pushFormatter($selectiveFormatter);
-        $errorHandler->pushHandler($logHandler);
-        $errorHandler->register();
+        $databaseConfig = FileConfigLoader::load($paths['config.database']);
+        Bootstrap::setup($databaseConfig);
     }
 
     public function run ()
