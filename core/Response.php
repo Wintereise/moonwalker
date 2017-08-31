@@ -9,15 +9,15 @@ class Response
     private $response;
     private $request;
 
-    public function __construct(ResponseInterface $response = null, RequestInterface $request)
+    public function __construct(RequestInterface $request = null, ResponseInterface $response = null)
     {
         $this->response = is_null($response) ? new \Zend\Diactoros\Response() : $response;
         $this->request = is_null($request) ? null : $request;
     }
 
-    public static function withRequest (RequestInterface $request)
+    public static function with (RequestInterface $request, ResponseInterface $response)
     {
-        return new static(null, $request);
+        return new static($request, $response);
     }
 
     public function ok (Array $data)

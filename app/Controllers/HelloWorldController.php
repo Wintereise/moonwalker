@@ -29,6 +29,6 @@ class HelloWorldController extends Controller
         ]))
             throw new ValidationFailedException($this->validator->errors());
 
-        return Response::withRequest($request)->ok([ 'All good!' ]);
+        return Response::with($request, $response)->ok([ 'All good!' ]);
     }
 }
