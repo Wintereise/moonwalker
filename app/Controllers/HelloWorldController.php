@@ -2,7 +2,6 @@
 namespace Moonwalker\Controllers;
 
 use Moonwalker\Core\Controller;
-use Moonwalker\Core\Errors\UserFriendlyException;
 use Moonwalker\Core\Errors\ValidationFailedException;
 use Moonwalker\Core\Response;
 
@@ -18,23 +17,18 @@ class HelloWorldController extends Controller
         $todos = new TodoCollection();
         $todos->where()->greaterThan('id', 20);
 
-        $t = new Response($response);
+        $t = new Response();
         return $t->ok([ $todos->toArray() ]);
     }
 
     public function postHello (ServerRequestInterface $request, ResponseInterface $response)
     {
         $data = $request->getParsedBody();
-        if ($this->validate($data, [
+        if (! $this->validate($data, [
             'required' => 'glossary'
         ]))
-        {
-            $msg = 'All good!';
-        }
-        else
             throw new ValidationFailedException($this->validator->errors());
 
-        $t = new Response($response);
-        return $t->ok([ $msg ]);
+        return Response::withRequest($request)->ok([ 'All good!' ]);
     }
 }

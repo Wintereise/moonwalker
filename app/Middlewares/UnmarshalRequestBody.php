@@ -60,6 +60,7 @@ class UnmarshalRequestBody
                         return $next($request->withParsedBody($arrayRepresentation), $response);
                     else
                         throw new UserFriendlyException("Unable to unmarshal MSGPACK, please check your request body.", 400);
+                    break;
             }
         }
 
