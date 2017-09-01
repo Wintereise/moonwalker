@@ -5,7 +5,6 @@ use Moonwalker\Core\Controller;
 use Moonwalker\Core\Errors\ValidationFailedException;
 use Moonwalker\Core\Response;
 
-use Moonwalker\Models\TodoCollection;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
@@ -17,8 +16,7 @@ class HelloWorldController extends Controller
         $todos = new TodoCollection();
         $todos->where()->greaterThan('id', 20);
 
-        $t = new Response();
-        return $t->ok([ $todos->toArray() ]);
+        return Response::with($request, $response)->ok($todos->toArray());
     }
 
     public function postHello (ServerRequestInterface $request, ResponseInterface $response)

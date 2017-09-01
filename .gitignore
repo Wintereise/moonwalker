@@ -4,3 +4,5 @@ composer.lock
 app/Storage/app*.log
 db
 .maghead-cli.*
+app/Models/*
+!app/Models/*Schema.php
