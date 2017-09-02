@@ -7,6 +7,7 @@ Custom PHP framework that ONLY includes the bare minimum functionality required 
 2. DI Container - [league/container](http://container.thephpleague.com)
 3. ORM - [maghead/maghead](https://github.com/maghead/maghead)
 4. Request validator - [vlucas/valitron](https://github.com/vlucas/valitron)
+5. JWT - [lcobucci/jwt](https://github.com/lcobucci/jwt)
 
 ###Getting started
 
@@ -14,6 +15,7 @@ Custom PHP framework that ONLY includes the bare minimum functionality required 
 
 * Controller definitions go in `app/Controllers`, please place your controllers in the `Moonwalker\Controllers` namespace. Your controller
    - MUST be registered in `app/Config/generic.php`'s `controllers` array. This is so we can autoinject dependencies via the IoC container.
+   - MUST extend `Moonwalker\Core\Controller`
 
 * Controller methods MUST return an instance of `Moonwalker\Core\Response` on success. Our response class is context aware, that means it will respond via lookup of content-type headers (json / xml / msgpack).
     - On failure, the framework expects an exception to be thrown.
