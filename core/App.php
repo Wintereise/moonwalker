@@ -4,7 +4,7 @@ namespace Moonwalker\Core;
 
 use \League\Container\Container as Container;
 use \League\Route\RouteCollection as RouteCollection;
-use League\BooBoo as ErrorHandler;
+use League\BooBoo\BooBoo as ErrorHandler;
 
 use Moonwalker\Core\Errors\Formatters\SelectiveErrorFormatter;
 
@@ -36,12 +36,8 @@ class App extends Container
             return new Logger('app');
         });
 
-        $errorHandler = new ErrorHandler\Runner();
-        $selectiveFormatter = new SelectiveErrorFormatter();
         $logger = $this->get('logger')->pushHandler(new FileHandler($paths['log'], $config['log.retention']));
-        $logHandler = new SelectiveErrorHandler($logger);
-        $errorHandler->pushFormatter($selectiveFormatter);
-        $errorHandler->pushHandler($logHandler);
+        $errorHandler = new ErrorHandler([ new SelectiveErrorFormatter() ], [ new SelectiveErrorHandler($logger) ]);
         $errorHandler->register();
 
         $this->add('Moonwalker\Core\App', function ()

@@ -9,8 +9,9 @@ use Moonwalker\Core\Errors\ValidationFailedException;
 
 class SelectiveErrorFormatter extends AbstractFormatter
 {
-    public function format(\Exception $e)
+    public function format($e)
     {
+        /** @var \Exception $e */
         if ($e->getCode() != 0)
             $code = $e->getCode();
         else
