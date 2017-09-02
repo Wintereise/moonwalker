@@ -16,6 +16,7 @@
         "league/route": "@stable",
         "league/booboo": "@stable",
         "zendframework/zend-diactoros": "@stable",
+        "sabre/event": "^5",
         "monolog/monolog": "@stable",
         "vlucas/valitron": "@stable",
         "lcobucci/jwt": "@stable",
@@ -41,6 +42,11 @@
             "Moonwalker\\Core\\": "core",
             "Moonwalker\\Schema\\": "app/Schema"
         }
+    },
+    "suggest": {
+        "ext-msgpack": "Enables support for application/msgpack and application/x-msgpack handling",
+        "ext-apcu": "Enables support for native data caching within PHP",
+        "ext-igbinary": "Enables support for igbinary in event processing"
     },
     "minimum-stability" : "dev",
     "prefer-stable" : true
