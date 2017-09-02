@@ -13,7 +13,7 @@ Custom PHP framework that ONLY includes the bare minimum functionality required 
 
 * Route definitions go in `app/Routes/routes.php`, please do not define callback routes. Any route should ultimately terminate into a controller, example is available in the route file. For advanced routing shenanigans, see the request router documentation.
 
-* Controller definitions go in `app/Controllers`, please place your controllers in the `Moonwalker\Controllers` namespace. Your controller:
+* Controller definitions go in `app/Controllers`, please place your controllers in the `Moonwalker\Controllers` namespace. Your controller
    - MUST extend `Moonwalker\Core\Controller`, but there is no need to call `parent::__construct()` at this stage.
    - MUST be registered in `app/Config/generic.php`'s `controllers` array. This is so we can autoinject dependencies via the IoC container.
    
