@@ -13,10 +13,7 @@ class HelloWorldController extends Controller
 {
     public function sayHello (ServerRequestInterface $request, ResponseInterface $response)
     {
-        $todos = new TodoCollection();
-        $todos->where()->greaterThan('id', 20);
-
-        return Response::with($request, $response)->ok($todos->toArray());
+        return Response::with($request, $response)->ok([ 'Hello world!' ]);
     }
 
     public function postHello (ServerRequestInterface $request, ResponseInterface $response)

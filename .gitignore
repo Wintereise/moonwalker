@@ -5,4 +5,5 @@ app/Storage/app*.log
 db
 .maghead-cli.*
 app/Models/*
+app/Config/database.php
 !app/Models/*Schema.php
