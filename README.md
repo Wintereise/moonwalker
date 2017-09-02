@@ -8,18 +8,14 @@ Custom PHP framework that ONLY includes the bare minimum functionality required 
 3. ORM - [maghead/maghead](https://github.com/maghead/maghead)
 4. Request validator - [vlucas/valitron](https://github.com/vlucas/valitron)
 
-
 ###Getting started
 
 * Route definitions go in `app/Routes/routes.php`, please do not define callback routes. Any route should ultimately terminate into a controller, example is available in the route file. For advanced routing shenanigans, see the request router documentation.
 
 * Controller definitions go in `app/Controllers`, please place your controllers in the `Moonwalker\Controllers` namespace. Your controller
-   - MUST extend `Moonwalker\Core\Controller`, but there is no need to call `parent::__construct()` at this stage.
    - MUST be registered in `app/Config/generic.php`'s `controllers` array. This is so we can autoinject dependencies via the IoC container.
 
-* Controller methods attached to ANY public route MUST employ input validation, your commit will be rejected if this is found to not be the case. See the `HelloWorldController::postHello` method in `app/Controllers/HelloworldController.php` for a real example.
-
-* Controller methods MUST return an instance of `Moonwalker\Core\Response` on success. Our response class is context aware, that means it will respond via the same medium that the request came in through (json / xml / msgpack).
+* Controller methods MUST return an instance of `Moonwalker\Core\Response` on success. Our response class is context aware, that means it will respond via lookup of content-type headers (json / xml / msgpack).
     - On failure, the framework expects an exception to be thrown.
         - Please use `Moonwalker\Core\Errors\UserFriendlyException ($message, $http_response_code)` to throw exceptions that are safe to disclose to the user.
         - Please use `Moonwalker\Core\Errors\ValidationFailedException (Array $validationFailures)` to throw exceptions that illustrate to the user why exactly their request was denied. You can get `$validationFailures` from the validator library, see `HelloWorldController::postHello` for an example. Response code is fixed to `400` for this.
