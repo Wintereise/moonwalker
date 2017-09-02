@@ -10,7 +10,19 @@
             "email": "contact@winterei.se",
             "homepage": "https://winterei.se",
             "role": "Lead Code Monkey"
-        }
+        },
+	{
+            "name": "Harry Chan",
+            "email": "harry.chan@levarion.com",
+            "homepage": "https://www.levarion.com",
+            "role": "Code Compiler"
+	},
+	{
+            "name": "Benny Tsai",
+            "email": "benny.tsai@levarion.com",
+            "homepage": "https://www.levarion.com",
+            "role": "Programmer"
+	}
     ],
     "require": {
         "league/route": "@stable",
@@ -22,13 +34,16 @@
         "swiftmailer/swiftmailer": "@stable",
         "jmhobbs/swiftmailer-transport-aws-ses": "^0.9.2",
         "google/recaptcha": "~1.1",
-        "adldap2/adldap2": "7.0.*",
         "php-http/guzzle6-adapter": "^1.1",
+	"payum/stripe": "^1.4.3",
         "payum-tw/ecpay": "^1.1",
+        "payum-tw/esunbank": "^1.1.2",
         "florianv/swap": "^3.1",
         "php-http/message": "^1.6",
+	"jamesryanbell/cloudflare": "^1.11",
         "geoip2/geoip2": "~2.0",
         "predis/predis": "^1.1",
+	"microsoft/windowsazure": "^0.5",
         "maghead/maghead": "dev-master",
         "easypost/easypost-php": "@stable"
     },
@@ -40,6 +55,11 @@
             "Moonwalker\\": "app",
             "Moonwalker\\Core\\": "core",
             "Moonwalker\\Schema\\": "app/Schema"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Moonwalker\\Test\\": "test"
         }
     },
     "minimum-stability" : "dev",
