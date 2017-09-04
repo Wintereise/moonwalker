@@ -4,7 +4,7 @@ namespace Moonwalker\Models;
 
 use Maghead\Schema\DeclareSchema;
 
-class AuthenticationSchema extends DeclareSchema
+class AuthenticationAttemptsSchema extends DeclareSchema
 {
     public function schema()
     {
