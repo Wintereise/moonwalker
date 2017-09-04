@@ -20,13 +20,14 @@ class UserController extends Controller
         ]))
             throw new ValidationFailedException($this->validator->errors());
 
-        $data = User::findByPrimaryKey($args['id']);
+        $user = User::findByPrimaryKey($args['id']);
 
-        if (! $data || ! count ($data))
+        if (! $user )
             throw new NotFoundException("Not found", null, 404);
 
-        $permissions = $data->permissions->items();
-        return Response::with($request, $response)->ok([ 'user' => $data, 'permissions' => $permissions ]);
+        $permissions = $user->permissions->items();
+
+        return Response::with($request, $response)->ok([ 'user' => $user, 'permissions' => $permissions ]);
     }
 
     public function getUsers (ServerRequestInterface $request, ResponseInterface $response)
