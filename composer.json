@@ -55,7 +55,8 @@
         "psr-4": {
             "Moonwalker\\": "app",
             "Moonwalker\\Core\\": "core",
-            "Moonwalker\\Schema\\": "app/Schema"
+            "Moonwalker\\Schema\\": "app/Schema",
+            "Moonwalker\\Seeders\\": "app/Seeders"
         }
     },
     "suggest": {

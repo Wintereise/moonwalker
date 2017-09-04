@@ -3,6 +3,7 @@
 namespace Moonwalker\Models;
 
 use Maghead\Schema\DeclareSchema;
+use Magsql\Raw;
 
 class UserSchema extends DeclareSchema
 {
@@ -55,17 +56,20 @@ class UserSchema extends DeclareSchema
             ->enum([ 'AWAITING_ACTIVATION', 'ACTIVATED', 'DEACTIVATED'])
             ->notNull();
 
-        $this->column('last_login')
-            ->timestamp()
-            ->null();
+
 
         $this->column('created_at')
             ->timestamp()
-            ->default(['current_timestamp']);
+            ->isa('DateTime')
+            ->default(new Raw('CURRENT_TIMESTAMP'));
 
         $this->column('updated_at')
             ->timestamp()
-            ->onUpdate(['current_timestamp'])
-            ->default(['current_timestamp']);
+            ->isa('DateTime')
+            ->default(new Raw('CURRENT_TIMESTAMP'))
+            ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
+
+        $this->many('permissions', 'Moonwalker\Models\PermissionAssociationSchema', 'user_id', 'id');
+        $this->many('roles', 'Moonwalker\Models\RoleAssociationSchema', 'user_id', 'id');
     }
 }

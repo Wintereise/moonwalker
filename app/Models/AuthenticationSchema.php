@@ -3,6 +3,7 @@
 namespace Moonwalker\Models;
 
 use Maghead\Schema\DeclareSchema;
+use Magsql\Raw;
 
 class AuthenticationSchema extends DeclareSchema
 {
@@ -42,13 +43,19 @@ class AuthenticationSchema extends DeclareSchema
             ->varchar(64)
             ->null();
 
+        $this->column('last_login')
+            ->timestamp()
+            ->null();
+
         $this->column('created_at')
             ->timestamp()
-            ->default(['current_timestamp']);
+            ->isa('DateTime')
+            ->default(new Raw('CURRENT_TIMESTAMP'));
 
         $this->column('updated_at')
             ->timestamp()
-            ->onUpdate(['current_timestamp'])
-            ->default(['current_timestamp']);
+            ->isa('DateTime')
+            ->default(new Raw('CURRENT_TIMESTAMP'))
+            ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
     }
 }

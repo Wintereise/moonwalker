@@ -3,6 +3,7 @@
 namespace Moonwalker\Models;
 
 use Maghead\Schema\DeclareSchema;
+use Magsql\Raw;
 
 class TwoFactorTransientAuthenticationSchema extends DeclareSchema
 {
@@ -31,11 +32,13 @@ class TwoFactorTransientAuthenticationSchema extends DeclareSchema
 
         $this->column('created_at')
             ->timestamp()
-            ->default(['current_timestamp']);
+            ->isa('DateTime')
+            ->default(new Raw('CURRENT_TIMESTAMP'));
 
         $this->column('updated_at')
             ->timestamp()
-            ->onUpdate(['current_timestamp'])
-            ->default(['current_timestamp']);
+            ->isa('DateTime')
+            ->default(new Raw('CURRENT_TIMESTAMP'))
+            ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
     }
 }
