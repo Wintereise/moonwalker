@@ -21,13 +21,6 @@ class UserController extends Controller
         ]))
             throw new ValidationFailedException($this->validator->errors());
 
-        $userId = $args['id'];
-
-        if(! PermissionManager::with(1) // MADE UP USER ID, meant to be extracted from JWT payload
-            ->verify('users.view', '*')
-        )
-
-
         $user = User::findByPrimaryKey($args['id']);
 
         if (! $user )
