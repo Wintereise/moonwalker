@@ -3,6 +3,7 @@ namespace Moonwalker\Controllers;
 
 use Moonwalker\Core\Controller;
 use Moonwalker\Core\Errors\ValidationFailedException;
+use Moonwalker\Core\PermissionManager;
 use Moonwalker\Core\Response;
 
 use Psr\Http\Message\ResponseInterface;

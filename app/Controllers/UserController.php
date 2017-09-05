@@ -5,6 +5,7 @@ namespace Moonwalker\Controllers;
 use League\Route\Http\Exception\NotFoundException;
 use Moonwalker\Core\Controller;
 use Moonwalker\Core\Errors\ValidationFailedException;
+use Moonwalker\Core\PermissionManager;
 use Moonwalker\Core\Response;
 use Moonwalker\Models\User;
 use Moonwalker\Models\UserCollection;
@@ -19,6 +20,13 @@ class UserController extends Controller
             'integer' => 'id'
         ]))
             throw new ValidationFailedException($this->validator->errors());
+
+        $userId = $args['id'];
+
+        if(! PermissionManager::with(1) // MADE UP USER ID, meant to be extracted from JWT payload
+            ->verify('users.view', '*')
+        )
+
 
         $user = User::findByPrimaryKey($args['id']);
 
