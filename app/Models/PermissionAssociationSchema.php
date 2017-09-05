@@ -41,6 +41,6 @@ class PermissionAssociationSchema extends DeclareSchema
             ->default(new Raw('CURRENT_TIMESTAMP'))
             ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
 
-        $this->belongsTo('permission',  'Moonwalker\Models\PermissionSchema', 'id', 'permission_id');
+        $this->belongsTo('definition',  'Moonwalker\Models\PermissionSchema', 'id', 'permission_id');
     }
 }

@@ -37,5 +37,8 @@ class RoleSchema extends DeclareSchema
             ->isa('DateTime')
             ->default(new Raw('CURRENT_TIMESTAMP'))
             ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
+
+        $this->many('associations', 'Moonwalker\Models\RoleAssociationSchema', 'role_id', 'id');
+
     }
 }

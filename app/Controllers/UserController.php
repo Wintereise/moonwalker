@@ -26,8 +26,13 @@ class UserController extends Controller
             throw new NotFoundException("Not found", null, 404);
 
         $permissions = $user->permissions->items();
+        foreach ($permissions as $permission)
+        {
+            $withDefinition[] = [ 'p' => $permission, 'd' => $permission->definition ];
+        }
 
-        return Response::with($request, $response)->ok([ 'user' => $user, 'permissions' => $permissions ]);
+
+        return Response::with($request, $response)->ok([ 'user' => $user, 'permissions' => $withDefinition ]);
     }
 
     public function getUsers (ServerRequestInterface $request, ResponseInterface $response)

@@ -31,6 +31,21 @@ Custom PHP framework that ONLY includes the bare minimum functionality required 
     - If the build succeeds, you're now ready to build the schema in the database server with `vendor/bin/maghead sql`
     - Any time a change is made to the schema, the last two commands need to be rerun.
     
+* ORM Relationships
+    - The general process to do this is defined [here](https://github.com/maghead/maghead/wiki/Defining-Relationship)
+    - Please note that `one` (as defined in the doc) does not exist, and you'll be forced to replace it with `hasOne` instead.
+    - Please name the accessors sensibly:
+        - An user may have multiple `permissions` and `roles`, thus this (below) makes sense. Read it like this: An user may have many permissions and roles.
+                ```
+                $this->many('permissions', 'Moonwalker\Models\PermissionAssociationSchema', 'user_id', 'id');
+                $this->many('roles', 'Moonwalker\Models\RoleAssociationSchema', 'user_id', 'id');
+               ```
+        - An association table however has a `definition`, i.e: a pointer to what that table creates an association for. For `PermissionAssociation` and `RoleAssociation`, these thus make sense (below). A permission (or role) association ultimately belongs to a specific permission or role.
+                ```        
+                $this->belongsTo('definition',  'Moonwalker\Models\PermissionSchema', 'id', 'permission_id');
+                $this->belongsTo('definition',  'Moonwalker\Models\RoleSchema', 'id', 'role_id');
+                ```
+                
 * The framework's request pipeline functions like `request -> route dispatcher -> middlewares -> controllers -> response`, if you want to perform things like Unmarshalling content, or checking for JWT auth, or checking for recaptcha token existing, the suggested place to do this is via a `Middleware`. See `app/Middlewares/UnmarshalRequestBody.php` for a fully dressed example.
     - You must define the magic `__invoke` method with 3 parameters like `(ServerRequestInterface $request, ResponseInterface $response, Callable $next)`
     - At the end of your processing, you MUST either throw an `Exception` (of any kind, this halts request processing and hands off to the error handler), or return `$next ($request, $response)`. Please note that these $request and $response objects do not have to be the same ones passed into the method, you're free to make changes to them before injecting them back into the pipeline.
