@@ -7,6 +7,7 @@ return [
     'controllers' => [
         'Moonwalker\Controllers\UserController',
         'Moonwalker\Controllers\HelloWorldController',
+        'Moonwalker\Controllers\TestController',
         'Moonwalker\Controllers\MaintenanceController',
     ]
 ];

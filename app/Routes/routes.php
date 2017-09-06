@@ -14,6 +14,7 @@ $router->group('/v1', function (\League\Route\RouteGroup $router)
 $router->group('/maint', function (\League\Route\RouteGroup $router)
 {
     $router->get('/seed', 'Moonwalker\Controllers\MaintenanceController::seedDatabase');
+    $router->get('/test/permissions/{uid}/{permission}/{target}', 'Moonwalker\Controllers\TestController::validatePermission');
 });
 
-$router->get('/test', 'Moonwalker\Controllers\HelloWorldController::runTest');
+

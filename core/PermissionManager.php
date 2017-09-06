@@ -2,10 +2,12 @@
 
 namespace Moonwalker\Core;
 
+use Magsql\Raw;
 use Moonwalker\Models\Permission;
 use Moonwalker\Models\PermissionAssociationCollection;
 use Moonwalker\Models\Role;
 use Moonwalker\Models\RoleAssociation;
+use Moonwalker\Models\RoleAssociationCollection;
 
 class PermissionManager
 {
@@ -50,26 +52,36 @@ class PermissionManager
              * Pass 2, role verification
              * Failing this, we have no further recourse.
              */
-            $init = new PermissionAssociationCollection();
 
-            $init->join(new Permission(), 'INNER', 'p')
-                ->on('m.permission_id', [ 'p.id' ]);
-
-            $init->join(new Role(), 'INNER', 'r')
-                ->on('m.role_id', [ 'r.id' ]);
-
-            $init->join(new RoleAssociation(), 'INNER', 'ra')
-                ->on('r.id', [ 'ra.role_id' ]);
+            $init = new RoleAssociationCollection();
 
             $init->where()
-                ->equal('ra.user_id', $this->userId)
+                ->equal('user_id', $this->userId);
+
+            $ret = $init->toArray();
+            $roleIds = [];
+
+            foreach ($ret as $item)
+            {
+                $roleIds[] = $item['role_id'];
+            }
+
+            if (count($roleIds) == 0)
+                return false;
+
+            $init = new PermissionAssociationCollection();
+
+            $init->join(new Permission(), 'INNER', 'p');
+
+            $init->join(new Role(), 'INNER', 'r');
+
+            $init->where()
                 ->equal('r.tenant_id', $this->tenantId)
-                ->equal('p.name', $permissionName);
+                ->equal('p.name', $permissionName)
+                ->in('m.role_id', $roleIds);
 
             if ($target != null)
                 $init->where()->in('m.target', [ $target, '*' ]);
-
-            return $init->toSql();
 
             if ($init->first())
                 return true;

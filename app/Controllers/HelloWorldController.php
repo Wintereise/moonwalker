@@ -3,7 +3,6 @@ namespace Moonwalker\Controllers;
 
 use Moonwalker\Core\Controller;
 use Moonwalker\Core\Errors\ValidationFailedException;
-use Moonwalker\Core\PermissionManager;
 use Moonwalker\Core\Response;
 
 use Psr\Http\Message\ResponseInterface;
@@ -26,11 +25,5 @@ class HelloWorldController extends Controller
             throw new ValidationFailedException($this->validator->errors());
 
         return Response::with($request, $response)->ok([ 'All good!' ]);
-    }
-
-    public function runTest (ServerRequestInterface $request, ResponseInterface $response)
-    {
-        $data = PermissionManager::with(3)->verify('users.view', '2');
-        return Response::with($request, $response)->ok([ $data ]);
     }
 }
