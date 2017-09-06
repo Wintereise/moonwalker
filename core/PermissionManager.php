@@ -69,6 +69,8 @@ class PermissionManager
             if ($target != null)
                 $init->where()->in('m.target', [ $target, '*' ]);
 
+            return $init->toSql();
+
             if ($init->first())
                 return true;
         }

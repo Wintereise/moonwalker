@@ -15,3 +15,5 @@ $router->group('/maint', function (\League\Route\RouteGroup $router)
 {
     $router->get('/seed', 'Moonwalker\Controllers\MaintenanceController::seedDatabase');
 });
+
+$router->get('/test', 'Moonwalker\Controllers\HelloWorldController::runTest');

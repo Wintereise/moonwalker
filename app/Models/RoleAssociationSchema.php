@@ -34,6 +34,7 @@ class RoleAssociationSchema extends DeclareSchema
             ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
 
         $this->belongsTo('definition',  'Moonwalker\Models\RoleSchema', 'id', 'role_id');
+        $this->belongsTo('user',  'Moonwalker\Models\UserSchema', 'id', 'user_id');
 
     }
 }
