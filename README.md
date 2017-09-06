@@ -50,3 +50,5 @@ Custom PHP framework that ONLY includes the bare minimum functionality required 
     - You must define the magic `__invoke` method with 3 parameters like `(ServerRequestInterface $request, ResponseInterface $response, Callable $next)`
     - At the end of your processing, you MUST either throw an `Exception` (of any kind, this halts request processing and hands off to the error handler), or return `$next ($request, $response)`. Please note that these $request and $response objects do not have to be the same ones passed into the method, you're free to make changes to them before injecting them back into the pipeline.
     - Middlewares are attached to specific routes or groups in `app/Routes/routes.php`
+    
+* Moonwalker\Core\Controller comes with built in Pagination support, see `core/Controller::paginate` for documentation on how to use it, and `UserController::getUsers` for a real application.
