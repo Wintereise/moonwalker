@@ -50,6 +50,7 @@ class Controller implements ContainerAwareInterface
      */
     public function paginate (Array $params, Collection $collection, Array $metadata = null)
     {
+
         if (is_null($metadata))
         {
             $metadata = [
@@ -67,12 +68,14 @@ class Controller implements ContainerAwareInterface
                 ]
             ]))
                 throw new ValidationFailedException($this->validator->errors());
-            $count = $collection->count();
 
-            $collection->page($params['page'], $params['page_size']);
+            $count = $collection->count();
+            $collection->reset();
+
+            $collection->page($params[$metadata['page']], $params[$metadata['page_size']]);
             return [
                 'paging_applied' => true,
-                'record_count' => $count
+                'record_count' => $count,
             ];
         }
         else

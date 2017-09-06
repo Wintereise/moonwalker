@@ -110,6 +110,6 @@ class UserController extends Controller
 
         $user->delete();
 
-        return Response::with($request, $response)->ok([ null ]);
+        return Response::with($request, $response)->noContent([ null ]);
     }
 }

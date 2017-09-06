@@ -22,6 +22,11 @@ class Response
         return new static($request, $response, $metadata);
     }
 
+    public function noContent (Array $data)
+    {
+        return $this->__generate($this->buildSchema($data), 204);
+    }
+
     public function ok (Array $data)
     {
         return $this->__generate($this->buildSchema($data), 200);
