@@ -39,6 +39,7 @@ class RoleSchema extends DeclareSchema
             ->onUpdate(new Raw('CURRENT_TIMESTAMP'));
 
         $this->many('associations', 'Moonwalker\Models\RoleAssociationSchema', 'role_id', 'id');
+        $this->many('permission_associations', 'Moonwalker\Models\PermissionAssociationSchema', 'role_id', 'id');
 
     }
 }
