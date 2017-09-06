@@ -17,7 +17,7 @@ class Response
         $this->metadata = $metadata;
     }
 
-    public static function with (RequestInterface $request, ResponseInterface $response, Array $metadata = null)
+    public static function with (RequestInterface $request, ResponseInterface $response, $metadata = null)
     {
         return new static($request, $response, $metadata);
     }
