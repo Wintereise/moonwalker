@@ -52,7 +52,6 @@ class PermissionManager
              */
 
             $init = new RoleAssociationCollection();
-
             $init->where()
                 ->equal('user_id', $this->userId);
 
@@ -70,7 +69,6 @@ class PermissionManager
             $init = new PermissionAssociationCollection();
 
             $init->join(new Permission(), 'INNER', 'p');
-
             $init->join(new Role(), 'INNER', 'r');
 
             $init->where()

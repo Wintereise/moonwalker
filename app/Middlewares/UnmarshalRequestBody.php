@@ -14,7 +14,7 @@ class UnmarshalRequestBody
         $contentType = $request->getHeader('content-type');
         $body = $request->getBody()->getContents();
 
-        if (isset($contentType[0]))
+        if (isset($contentType[0]) && strlen($body) >= 3)
         {
             switch ($contentType[0])
             {

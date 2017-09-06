@@ -8,22 +8,24 @@ class Response
 {
     private $response;
     private $request;
+    private $metadata;
 
-    public function __construct(RequestInterface $request = null, ResponseInterface $response = null)
+    public function __construct(RequestInterface $request = null, ResponseInterface $response = null, Array $metadata)
     {
         $this->response = is_null($response) ? new \Zend\Diactoros\Response() : $response;
         $this->request = is_null($request) ? null : $request;
+        $this->metadata = $metadata;
     }
 
-    public static function with (RequestInterface $request, ResponseInterface $response)
+    public static function with (RequestInterface $request, ResponseInterface $response, Array $metadata = null)
     {
-        return new static($request, $response);
+        return new static($request, $response, $metadata);
     }
 
     public function ok (Array $data)
     {
         $temp = [
-            "success" => true, "payload" => $data, "error" => null
+            "success" => true, "payload" => $data, "error" => null, '_meta' => $this->metadata
         ];
 
         return $this->__generate($temp, 200);
@@ -55,6 +57,8 @@ class Response
                         $this->response->getBody()->write(json_encode($data));
                 }
             }
+            else
+                $this->response->getBody()->write(json_encode($data));
         }
 
         return $this->response->withStatus($status);
