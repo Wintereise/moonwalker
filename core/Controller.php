@@ -78,4 +78,67 @@ class Controller implements ContainerAwareInterface
         else
             return false;
     }
+
+    /*
+     * Constructs a new key-value array with ONLY those fields that have been run through the validator
+     * i.e: If input has field `config` but `config` has not been validated, it will be stripped from the final array.
+     * It also strips NULL values, workaround for: https://github.com/vlucas/valitron/issues/209#issuecomment-327541745
+     * @param Array $data Original data array gotten from $request->getParsedBody()
+     * @param Array $validationRules Array based rule definition for Valitron/validator. Example:
+     * [
+            'required' => [
+                ['first_name'], ['last_name'], ['email'], ['password']
+            ],
+            'email' => 'email',
+            'optional' => [
+                ['phone'], ['timezone'], ['language']
+            ],
+            'lengthBetween' => [
+                ['password', 5, 72]
+            ],
+            'slug' => [
+                ['phone'], ['timezone'], ['language']
+            ],
+        ];
+     * @returns Array
+     */
+    public function cherryPick (Array $data, Array $validationRules, $stripNulls = true)
+    {
+        $validatedKeys = [];
+        foreach ($validationRules as $rule => $targets)
+        {
+            if (is_string($targets))
+                $validatedKeys[] = $targets; // Rule that only affects one field, and thus is represented as a simple string
+            elseif (is_array($targets))
+            {
+                foreach ($targets as $target)
+                    $validatedKeys[] = $target[0]; // Because the first (often only) element is ALWAYS the name of the field in ruleMap notation
+            }
+        }
+        $validatedKeys = array_unique($validatedKeys); // Remove duplicates since more than one constraint can target a field
+        $newArray = [];
+
+        foreach ($validatedKeys as $key)
+        {
+            if (array_key_exists($key, $data))
+            {
+                if ($stripNulls && $data[$key] == null)
+                    continue;
+                $newArray[$key] = $data[$key];
+            }
+        }
+
+        return $newArray;
+    }
+
+    /*
+     * Shorthand because this particular validation is SO very common
+     */
+    public function validateId (Array $args)
+    {
+        if (! $this->validate($args, [
+            'integer' => 'id'
+        ]))
+            throw new ValidationFailedException($this->validator->errors());
+    }
 }

@@ -8,6 +8,9 @@ $router->post('/', 'Moonwalker\Controllers\HelloWorldController::postHello')
 $router->group('/v1', function (\League\Route\RouteGroup $router)
 {
     $router->get('/users/{id}', 'Moonwalker\Controllers\UserController::getUser');
+    $router->put('/users/{id}', 'Moonwalker\Controllers\UserController::updateUser');
+    $router->patch('/users/{id}', 'Moonwalker\Controllers\UserController::updateUser');
+    $router->delete('/users/{id}', 'Moonwalker\Controllers\UserController::deleteUser');
     $router->get('/users', 'Moonwalker\Controllers\UserController::getUsers');
     $router->post('/users', 'Moonwalker\Controllers\UserController::createUser');
 })

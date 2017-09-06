@@ -41,7 +41,7 @@ class UserController extends Controller
         if (! $this->validate($data, $this->_rules))
             throw new ValidationFailedException($this->validator->errors());
 
-        $user = User::createAndLoad($data);
+        $user = User::createAndLoad($this->cherryPick($data, $this->_rules));
 
         return Response::with($request, $response)->created([ $user ]);
     }
@@ -74,5 +74,42 @@ class UserController extends Controller
         $meta = $this->paginate($request->getQueryParams(), $collection);
 
         return Response::with($request, $response, $meta)->ok([ $collection->toArray() ]);
+    }
+
+    public function updateUser (ServerRequestInterface $request, ResponseInterface $response, Array $args)
+    {
+        $this->validateId($args);
+
+        $data = $request->getParsedBody();
+        if (! $this->validate($data, $this->_rules))
+            throw new ValidationFailedException($this->validator->errors());
+
+        /** @var \Moonwalker\Models\User $user */
+        $user = User::findByPrimaryKey($args['id']);
+        if (! $user)
+            throw new NotFoundException("Not found", null, 404);
+
+        $user->setData($this->cherryPick($data, $this->_rules));
+        $user->save();
+
+        return Response::with($request, $response)->ok([ $user ]);
+    }
+
+    /*
+     * Todo: Test to see if a deletion like this automatically nukes the entries in the defined relations' tables too
+     */
+
+    public function deleteUser (ServerRequestInterface $request, ResponseInterface $response, Array $args)
+    {
+        $this->validateId($args);
+
+        /** @var \Moonwalker\Models\User $user */
+        $user = User::findByPrimaryKey($args['id']);
+        if (! $user)
+            throw new NotFoundException("Not found", null, 404);
+
+        $user->delete();
+
+        return Response::with($request, $response)->ok([ null ]);
     }
 }

@@ -16,6 +16,7 @@ class UserSchema extends DeclareSchema
 
         $this->column('tenant_id')
             ->integer()
+            ->default(1)
             ->notNull();
 
         $this->column('first_name')
