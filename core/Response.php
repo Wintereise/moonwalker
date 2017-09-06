@@ -10,7 +10,7 @@ class Response
     private $request;
     private $metadata;
 
-    public function __construct(RequestInterface $request = null, ResponseInterface $response = null, Array $metadata)
+    public function __construct(RequestInterface $request = null, ResponseInterface $response = null, $metadata)
     {
         $this->response = is_null($response) ? new \Zend\Diactoros\Response() : $response;
         $this->request = is_null($request) ? null : $request;
