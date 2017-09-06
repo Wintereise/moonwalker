@@ -23,15 +23,22 @@ class Controller implements ContainerAwareInterface
 
     }
 
-    public function validate (Array $data, Array $rules)
+    private function initValidator (Array $data, Array $rules = null)
     {
         if (is_null($this->validator))
             $this->validator = new Validator($data);
         else
             $this->validator->withData($data);
 
-        $this->validator->rules($rules);
+        if ( is_array($rules) && count($rules) >= 1)
+            $this->validator->rules($rules);
 
+        return $this->validator;
+    }
+
+    public function validate (Array $data, Array $rules)
+    {
+        $this->initValidator($data, $rules);
         return $this->validator->validate();
     }
 

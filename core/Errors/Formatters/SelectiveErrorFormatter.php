@@ -16,6 +16,7 @@ class SelectiveErrorFormatter extends AbstractFormatter
             $code = $e->getCode();
         else
             $code = 500;
+
         http_response_code($code);
 
         $why = null;

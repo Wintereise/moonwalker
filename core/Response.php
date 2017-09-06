@@ -24,11 +24,19 @@ class Response
 
     public function ok (Array $data)
     {
-        $temp = [
-            "success" => true, "payload" => $data, "error" => null, '_meta' => $this->metadata
-        ];
+        return $this->__generate($this->buildSchema($data), 200);
+    }
 
-        return $this->__generate($temp, 200);
+    public function created (Array $data)
+    {
+        return $this->__generate($this->buildSchema($data), 201);
+    }
+
+    private function buildSchema (Array $data, $success = true, $error = null)
+    {
+        return [
+            "success" => $success, "payload" => $data, "error" => $error, '_meta' => $this->metadata
+        ];
     }
 
     private function __generate ($data, $status)

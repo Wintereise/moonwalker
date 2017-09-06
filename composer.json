@@ -83,8 +83,6 @@
     "suggest": {
       "ext-msgpack": "Enables support for application/msgpack and application/x-msgpack handling",
       "ext-apcu": "Enables support for native data caching within PHP",
-      "ext-igbinary": "Enables support for igbinary in event processing",
-      "ext-ldap": "Enables LDAP support for use management"
     },
     "minimum-stability" : "dev",
     "prefer-stable" : true

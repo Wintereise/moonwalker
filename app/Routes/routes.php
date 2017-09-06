@@ -9,6 +9,7 @@ $router->group('/v1', function (\League\Route\RouteGroup $router)
 {
     $router->get('/users/{id}', 'Moonwalker\Controllers\UserController::getUser');
     $router->get('/users', 'Moonwalker\Controllers\UserController::getUsers');
+    $router->post('/users', 'Moonwalker\Controllers\UserController::createUser');
 })
     ->middleware(new \Moonwalker\Middlewares\UnmarshalRequestBody());
 

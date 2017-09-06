@@ -13,6 +13,39 @@ use Psr\Http\Message\ServerRequestInterface;
 
 class UserController extends Controller
 {
+    private $_rules;
+
+    public function __construct()
+    {
+        $this->_rules = [
+            'required' => [
+                ['first_name'], ['last_name'], ['email'], ['password']
+            ],
+            'email' => 'email',
+            'optional' => [
+                ['phone'], ['timezone'], ['language']
+            ],
+            'lengthBetween' => [
+                ['password', 5, 72]
+            ],
+            'slug' => [
+                ['phone'], ['timezone'], ['language']
+            ],
+        ];
+    }
+
+    public function createUser (ServerRequestInterface $request, ResponseInterface $response)
+    {
+        $data = $request->getParsedBody();
+
+        if (! $this->validate($data, $this->_rules))
+            throw new ValidationFailedException($this->validator->errors());
+
+        $user = User::createAndLoad($data);
+
+        return Response::with($request, $response)->created([ $user ]);
+    }
+
     public function getUser (ServerRequestInterface $request, ResponseInterface $response, Array $args)
     {
         if (! $this->validate($args, [
