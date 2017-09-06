@@ -2,11 +2,9 @@
 
 namespace Moonwalker\Core;
 
-use Magsql\Raw;
 use Moonwalker\Models\Permission;
 use Moonwalker\Models\PermissionAssociationCollection;
 use Moonwalker\Models\Role;
-use Moonwalker\Models\RoleAssociation;
 use Moonwalker\Models\RoleAssociationCollection;
 
 class PermissionManager
