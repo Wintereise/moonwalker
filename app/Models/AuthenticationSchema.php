@@ -31,6 +31,10 @@ class AuthenticationSchema extends DeclareSchema
             ->varchar(128)
             ->null();
 
+        $this->column('password_type')
+            ->enum([ "BCRYPT", "SCRYPT", "ARGON2" ] )
+            ->null();
+
         $this->column('password_expiry')
             ->timestamp()
             ->null();
