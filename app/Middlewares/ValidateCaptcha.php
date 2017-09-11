@@ -3,7 +3,6 @@
 
 namespace Moonwalker\Middlewares;
 
-use League\Route\Http\Exception\ForbiddenException;
 use Moonwalker\Core\Errors\UserFriendlyException;
 use Moonwalker\Core\Utility;
 use Psr\Http\Message\ResponseInterface;
@@ -31,7 +30,7 @@ class ValidateCaptcha
 
                 $recaptcha = new ReCaptcha($captchaProviders['RECAPTCHA']);
                 if (! $recaptcha->verify($captchaToken, $clientIP))
-                    throw new ForbiddenException("Your request has failed RECAPTCHA verification.", null, 403);
+                    throw new UserFriendlyException("Your request has failed RECAPTCHA verification.", 403);
                 break;
 
             default:

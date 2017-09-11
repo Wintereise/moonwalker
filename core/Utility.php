@@ -32,6 +32,12 @@ class Utility
         return $ipAddr;
     }
 
+    public static function extractJWTToken ($header)
+    {
+        list ($bearer, $token) = explode(" ", $header);
+        return $token;
+    }
+
     public static function isAjax(ServerRequestInterface $request)
     {
         return strtolower($request->getHeaderLine('X-Requested-With')) === 'xmlhttprequest';
