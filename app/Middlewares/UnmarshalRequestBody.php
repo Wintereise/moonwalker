@@ -3,11 +3,12 @@
 namespace Moonwalker\Middlewares;
 
 use Moonwalker\Core\Errors\UserFriendlyException;
+use Moonwalker\Core\Middleware;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
 
-class UnmarshalRequestBody
+class UnmarshalRequestBody extends Middleware
 {
     public function __invoke(ServerRequestInterface $request, ResponseInterface $response, Callable $next)
     {

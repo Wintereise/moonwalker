@@ -9,5 +9,10 @@ return [
         'Moonwalker\Controllers\HelloWorldController',
         'Moonwalker\Controllers\TestController',
         'Moonwalker\Controllers\MaintenanceController',
-    ]
+    ],
+    'middlewares' => [
+        'Moonwalker\Middlewares\JWTAuth',
+        'Moonwalker\Middlewares\UnmarshalRequestBody',
+        'Moonwalker\Middlewares\ValidateCaptcha'
+    ],
 ];

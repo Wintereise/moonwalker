@@ -6,11 +6,12 @@ use Lcobucci\JWT\Parser;
 use Lcobucci\JWT\ValidationData;
 use Moonwalker\Core\Errors\UserFriendlyException;;
 
+use Moonwalker\Core\Middleware;
 use Moonwalker\Core\Utility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class JWTAuth
+class JWTAuth extends Middleware
 {
     public function __invoke (ServerRequestInterface $request, ResponseInterface $response, Callable $next)
     {
@@ -43,6 +44,8 @@ class JWTAuth
         }
         else
             throw new UserFriendlyException("JWT verification failed.", 403); // Yes, the errors are slightly different.
+
+        $this->container->add('auth', $parsedToken->getClaims());
 
         return $next($request, $response);
     }

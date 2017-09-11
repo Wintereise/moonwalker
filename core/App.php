@@ -53,6 +53,11 @@ class App extends Container
             $this->share($controller);
         }
 
+        foreach ($config['middlewares'] as $middleware)
+        {
+            $this->share($middleware);
+        }
+
         $this->share('response', Response::class);
         $this->share('request', function ()
         {

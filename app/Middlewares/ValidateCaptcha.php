@@ -4,12 +4,13 @@
 namespace Moonwalker\Middlewares;
 
 use Moonwalker\Core\Errors\UserFriendlyException;
+use Moonwalker\Core\Middleware;
 use Moonwalker\Core\Utility;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use ReCaptcha\ReCaptcha;
 
-class ValidateCaptcha
+class ValidateCaptcha extends Middleware
 {
     public function __invoke (ServerRequestInterface $request, ResponseInterface $response, Callable $next)
     {
