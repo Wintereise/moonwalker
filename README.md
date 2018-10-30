@@ -1,15 +1,15 @@
-##moonwalker-api
+## moonwalker-api
 
 Custom PHP framework that ONLY includes the bare minimum functionality required to build RESTFUL PHP APIs.
 
-###Libraries and their Documentation
+### Libraries and their Documentation
 1. Request Router - [league/router](http://route.thephpleague.com)
 2. DI Container - [league/container](http://container.thephpleague.com)
 3. ORM - [maghead/maghead](https://github.com/maghead/maghead)
 4. Request validator - [vlucas/valitron](https://github.com/vlucas/valitron)
 5. JWT - [lcobucci/jwt](https://github.com/lcobucci/jwt)
 
-###Getting started
+### Getting started
 
 * Route definitions go in `app/Routes/routes.php`, please do not define callback routes. Any route should ultimately terminate into a controller, example is available in the route file. For advanced routing shenanigans, see the request router documentation.
 
